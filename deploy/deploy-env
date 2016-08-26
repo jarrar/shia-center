@@ -1,0 +1,53 @@
+#!/bin/bash
+
+readonly bash_profile=$HOME/.bash_profile
+#readonly bash_profile=$HOME/.bash_jj
+readonly env_dir=$HOME/env.d
+
+function die()
+{
+  echo $@
+  exit 1
+}
+
+function copy_bash_profile()
+{
+    if [[ -e $bash_profile ]]
+    then
+        cp ${bash_profile}{,.orig}
+    fi
+}
+
+# this function generates the .bash_profile that gets
+# deployed, it loops through a dir env.d and sources 
+# all scripts.
+function generate_bash_profile()
+{
+  copy_bash_profile
+  cat <<-EOF >$bash_profile
+#!/bin/bash
+ENV_DIR=\$HOME/env.d
+
+if [[ -e \$ENV_DIR ]]
+then
+    for e in \$(ls \$ENV_DIR)
+    do
+		  source \$ENV_DIR/\$e
+	  done 
+fi
+
+EOF
+}
+
+function copy_env_files()
+{
+  [[ ! -e $env_dir ]] && mkdir -p $env_dir
+  cp env.d/* $env_dir/.
+}
+
+#
+# main
+#
+
+generate_bash_profile || die "FAILED to geneerate bash_profile"
+copy_env_files        || die "FAILED to copy env files"

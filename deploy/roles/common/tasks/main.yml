@@ -1,0 +1,82 @@
+---
+
+# --------------------------- Create a User and stuff --------------------------
+- name: create jjaffari user
+  user: name=jjaffari groups=wheel state=present
+
+- name: setup the authorized key
+  authorized_key: key="ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAyqbJZ/Y9FCVZHP0WAiryQPQtyfYEoinYgCgXC3s7z74ol0qhG6Chi2M0kcR3RNevwd5XWYstPTYekKc9Bb6PiLgMxKxKP+zmz7Vp7oQ2nJqDDDxgxnNfuebFfeA9SOWKophG+BVXn3pcJmFZHrgKwdjBXqHiDJs7G6Rxm/5W3XQtQ5q8xbb06YvbdoqDvd8qxs6+Rirkx6SGPyRnR48Jw+Qj9wrEwBVE9aQu2E/TUHQDJzGf/EqITFMV/K1ALyUf6k8XgBrm69Qi4u1QQLC5yuvIOI5z5xhcQy8TI+iXhFxt1/6rjwEK1qkek9tTayJMkHwgKJRsb5D9m0pbaC9ADQ== Akjhkfksfkjwefhjjaffari@sipsig-lnx17" user=jjaffari state=present
+
+- hostname: name=jjaffari-virt-centos-1
+- name: Install .bashrc file
+  copy: src=bashrc dest=/home/jjaffari/.bashrc owner=jjaffari group=jjaffari
+
+- name: copy ssh keys
+  copy: src={{ item }} dest=/home/jjaffari/.ssh/ owner=jjaffari group=jjaffari
+  with_items:
+        - id_rsa
+        - id_rsa.pub
+
+# -------- Directory Structure and copy my stuff -------------------------------
+
+- name: making bin
+  file: path=/home/jjaffari/bin owner=jjaffari group=jjaffari state=directory
+
+- name: Copy .bashrc file
+  copy: src=bashrc dest=/root/.bashrc owner=root group=root
+
+- name: deploying cpp_proj
+  unarchive: src=cpp_proj.tar.gz dest=/home/jjaffari/bin/ owner=jjaffari group=jjaffari
+
+- name: Making Development dir
+  file: path=/home/jjaffari/Development owner=jjaffari group=jjaffari state=directory
+  file: path=/home/jjaffari/Development/bash owner=jjaffari group=jjaffari state=directory
+  file: path=/home/jjaffari/Development/cpp owner=jjaffari group=jjaffari state=directory
+
+- name: Turn off firewalld
+  service: name=firewalld state=stopped enabled=false
+
+- name: Install EPEL
+  yum: name=epel-release state=present
+
+- name: Install sudo configuration
+  copy: src=sudoers dest=/etc/sudoers.d/jjaffari
+
+- pip: name=ipython
+
+- name: Install common yum packages
+  yum: name={{ item }} state=present
+  with_items:
+    - gcc
+    - vim
+    - wget
+    - curl
+    - mc
+    - git
+    - strace
+    - sysstat
+    - htop
+    - iotop
+    - mlocate
+    - python
+    - python-devel
+    - python-httplib2
+    - python-pip
+    - telnet
+    - screen
+    - lsof
+    - ntp
+    - unzip
+    - ack
+    - nc
+    - man
+    - gmp
+    - gmp-devel
+    - colordiff
+    - moreutils
+    - tcpdump
+    - nload
+    - jq
+  tags:
+    - install
+    - yum

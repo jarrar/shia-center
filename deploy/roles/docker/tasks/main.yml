@@ -1,0 +1,14 @@
+---
+- name: Install packages
+  yum: name={{ item }} state=present
+  with_items:
+    - docker
+
+- name: Start docker on boot
+  service: name=docker state=started enabled=true
+
+- name: Create docker user
+  user: name=docker groups=wheel state=present
+
+- name: Add mpeters to the docker group
+  user: name=mpeters groups=docker append=true

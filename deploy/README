@@ -1,0 +1,11 @@
+What does it do?
+
+    Installs Jarrar's Centos server with all bells and whistles for development
+
+How to:
+
+    > s Centos server with all bells and whistles for development
+
+How to:
+
+    > ./deploy_my_centos centos.inv  

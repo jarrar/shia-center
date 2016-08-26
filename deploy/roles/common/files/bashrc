@@ -1,0 +1,12 @@
+# aliases
+alias vi=vim
+alias ll="ls -l"
+
+# better history settings
+export HISTCONTROL=ignoredups:erasedups
+HISTSIZE= HISTFILESIZE=
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+
+export PATH=$HOME/bin:$PATH
+export PS1="\h [\W]>"
