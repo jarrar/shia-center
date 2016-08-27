@@ -1,5 +1,4 @@
 #!/bin/bash
-# Copyright (c) 1999 Cisco Systems, Inc.  All rights reserved.
 # AUTHOR:  Jarrar Jaffari (), jjaffari@cisco.com
 #set -o nounset
 readonly SCRIPT=${0##*/}
