@@ -21,7 +21,7 @@ HELP
 
 function init()
 {
-   os=$(uname)
+   local os=$(uname)
    if [[ $os == "Darwin" ]]
    then
         GETOPT=/usr/local/Cellar/gnu-getopt/1.1.6/bin/getopt
