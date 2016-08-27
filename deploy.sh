@@ -1,5 +1,5 @@
 #!/bin/bash
-# AUTHOR:  Jarrar Jaffari (), jjaffari@cisco.com
+# AUTHOR:
 #set -o nounset
 readonly SCRIPT=${0##*/}
 
