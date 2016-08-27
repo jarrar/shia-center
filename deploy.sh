@@ -90,5 +90,9 @@ done
 [[ -z $INVENTORY ]] && die "Missing inventory file"
 is_playbook_valid "$PLAYBOOK" || die "Invalid playbook: $PLAYBOOK"
 
-#COPYFILE_DISABLE=1 tar -czvf web.tar.gz web
+if [[ $PLAYBOOK == "deploy-codeigniter.yml" ]]
+then
+    COPYFILE_DISABLE=1 tar -czvf web.tar.gz web
+fi
+
 time ansible-playbook $DEBUG -i $INVENTORY $TOPDIR/deploy/$PLAYBOOK
