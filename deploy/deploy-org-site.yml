@@ -1,0 +1,24 @@
+#
+# What is it?
+#
+- hosts: all
+  tasks:
+    - name: Pingging ...
+      ping:
+
+    #- name: Copy files
+    #  copy: src=./jj.txt dest=/home/iabatadmin/public_html/JARRAR/.
+
+    #- name: Copy web PHP files
+      #copy: src=../web dest=/home/iabatadmin/public_html/JARRAR/.
+      #copy: src=../web.tar.gz dest=/home/iabatadmin/public_html/JARRAR/.
+
+    #- unarchive: src=../web.tar.gz dest=/home/iabatadmin/public_html/JARRAR/.
+
+    - name: Copying all site files
+      copy: src={{ item }} dest={{ dest_site_dir }}
+      with_items:
+         - "{{ src_site_data.controlers_dir }}"
+         - "{{ src_site_data.models_dir }}"
+         - "{{ src_site_data.views_dir }}"
+

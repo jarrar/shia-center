@@ -1,0 +1,12 @@
+#
+# This will deploy latest code igniter, found in dir
+#       -) codeigniter
+
+- hosts: all
+  tasks:
+    - name: Ping to see server is alive and well.
+      ping:
+
+    - name: Deploying code igniter
+      unarchive: src=../web.tar.gz dest={{ site_target_dir }}/.
+

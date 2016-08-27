@@ -1,0 +1,8 @@
+site_target_dir: /home/iabatadmin/public_html/JARRAR
+src_site_data: {
+    controlers_dir: ../web/application/controllers,
+    models_dir: ../web/application/models,
+    views_dir: ../web/application/views
+    }
+
+dest_site_dir: /home/iabatadmin/public_html/JARRAR/web/application
